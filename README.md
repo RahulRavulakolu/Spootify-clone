@@ -6,6 +6,7 @@
 
 🎧 Spotify Clone – Web Music Player
 
+
 A Spotify-inspired music streaming UI clone built using **HTML, CSS, and JavaScript**.  
 This project replicates Spotify’s modern design and includes essential playback functionality, dynamic playlist rendering, and responsive layouts.
 
@@ -13,7 +14,7 @@ This project replicates Spotify’s modern design and includes essential playbac
 
 📸 Demo
 
-> 📂 Add live demo link or GitHub Pages link here (optional)
+<img width="1919" height="899" alt="Screenshot 2025-07-16 120153" src="https://github.com/user-attachments/assets/3f92c4cd-714f-4932-9a51-9b56b2451431" />
 
 
 
