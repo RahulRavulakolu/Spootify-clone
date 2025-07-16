@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="./assets/logo.png">
+    <title>Spotify - Web Player: Music for everyone</title>
+</head>
+<body>
+    <div class="main">
+        <div class="sidebar">
+            <div class="nav">
+                <button id="close-btn"><i class="fa-solid fa-xmark close"></i></button>
+                <div class="nav-option"  style="opacity: 1;">
+                    <i class="fa-solid fa-house"></i>
+                    <a href="#">Home</a>
+                </div>
+                <div class="nav-option">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <a href="#">Search</a>
+                </div>
+            </div>
+            <div class="library">
+                <div class="options">
+                    <div class="lib-options nav-option">
+                        <img src="/assets/library_icon.png">
+                        <a href="#">Your Library</a>
+                    </div>
+                    <div class="icons">
+                        <i class="fa-solid fa-plus"></i>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                </div>
+
+                <div class="songslist">
+                    <ul >
+                        
+                    </ul>
+                </div>
+
+                <div class="boxes" style="background-color: #121212;">
+                    <div class="playlist">
+                        <p class="option-p1" >Create your first playlist</p>
+                        <p class="option-p2" >It's easy we'll help you</p>
+                        <button class="badge" >Create playlist</button>
+                    </div>
+                    <div class="playlist">
+                        <p class="option-p1" >Lets's find some podocasts to follow</p>
+                        <p class="option-p2" >We'll keep you upadated on new episodes</p>
+                        <button class="badge" >Browse podocasts</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="sticky-nav">
+                <div class="sticky-nav-icons"  style="background-color: #121212;">
+                    <button style="border: none;" id="hamburger"><i class="fa-solid fa-bars hamburger"></i></button>
+                    <img src="/assets/backward_icon.png"  style="background-color: #121212;"class="hide">
+                    <img src="/assets/forward_icon.png"  style="background-color: #121212;" >
+                </div>
+                <div class="sticky-nav-options"  style="background-color: #121212;">
+                    <button class="badge hide" >Explore premium</button>
+                    <button class="badge dark-badge" ><i class="fa-regular fa-circle-down" style="margin-right: 7px; font-size: 14px;"></i>Install app</button>
+                    <i class="fa-regular fa-user" id="user" style="background-color: #121212;"></i>
+                </div>
+                
+            </div>
+
+            <!-- featured chats -->
+            <h2 style="background-color: #121212;">Featured Charts</h2>
+            <div class="cards-container">
+                <div class="card" data-folder="ncs">
+                    <div class="icon-wrapper">
+                        <i class="fa-solid fa-play"></i>
+                    </div>
+                    <img src="/assets/card1img.jpeg" class="cards-img">
+                    <p class="cards-title">Top 50-Global</p>
+                    <p class="cards-info">Your daily updates of the mostly played tracks</p>
+                </div>
+                
+                <div class="card" data-folder="cs">
+                    <div class="icon-wrapper">
+                        <i class="fa-solid fa-play"></i>
+                    </div>
+                    <img src="/assets/card7.png" class="cards-img">
+                    <p class="cards-title">The Official Podcast</p>
+                    <p class="cards-info">The Official Podcast</p>
+                </div>
+
+                <div class="card" data-folder="Arijit_Singh_Specials">
+                    <div class="icon-wrapper">
+                        <i class="fa-solid fa-play"></i>
+                    </div>
+                    <img src="https://pickasso.spotifycdn.com/image/ab67c0de0000deef/dt/v1/img/daily/2/ab6761610000e5eb5ba2d75eb08a2d672f9b69b7/en" class="cards-img">
+                    <p class="cards-title">Arijit Singh Specials</p>
+                    <p class="cards-info">Arijit Singh, Sachin-Jigar, Ram Sampath and more</p>
+                </div>
+            </div>
+
+            <!-- popular artists -->
+            <h2 style="background-color: #121212;">Popular Artists</h2>
+            <div class="cards-container">
+                <div class="card" data-folder="Arijit_Singh_Specials">
+                    <div class="icon-wrapper">
+                        <i class="fa-solid fa-play"></i>
+                    </div>
+                    <img src="/assets/Artist4.jpeg" class="cards-img artists" style="height: 171.5px; width: 171.5px;">
+                    <p class="cards-title">Arijit Singh</p>
+                    <p class="cards-info">Artist</p>
+                </div>
+                <div class="card" data-folder="Pritam">
+                    <div class="icon-wrapper">
+                        <i class="fa-solid fa-play"></i>
+                    </div>
+                    <img src="/assets/Artist1.jpeg" class="cards-img artists">
+                    <p class="cards-title">Pritam</p>
+                    <p class="cards-info">Artist</p>
+                </div>
+                <div class="card" data-folder="SPBalu">
+                    <div class="icon-wrapper">
+                        <i class="fa-solid fa-play"></i>
+                    </div>
+                    <img src="/assets/Artist2.jpeg" class="cards-img artists">
+                    <p class="cards-title" style="font-size: 0.9rem;">S.P.Balasubrhmanyam</p>
+                    <p class="cards-info">Artist</p>
+                </div>
+                <div class="card" data-folder="Sid_sriram">
+                    <div class="icon-wrapper">
+                        <i class="fa-solid fa-play"></i>
+                    </div>
+                    <img src="/assets/Artist3.jpeg" class="cards-img artists">
+                    <p class="cards-title">Sid Sriram</p>
+                    <p class="cards-info">Artist</p>
+                </div>
+            </div>
+
+            <!-- popular radio -->
+            <h2 style="background-color: #121212;">Popular Radio</h2>
+            <div class="cards-container">
+                <div class="card" data-folder="">
+                    <div class="icon-wrapper">
+                        <i class="fa-solid fa-play"></i>
+                    </div>
+                    <img src="/assets/radio1.jpeg" class="cards-img">
+                   
+                    <p class="cards-info">With Sachin-Jigar, Mithoon, Pritam and more</p>
+                </div>
+                
+                <div class="card">
+                    <div class="icon-wrapper">
+                        <i class="fa-solid fa-play"></i>
+                    </div>
+                    <img src="/assets/radio2.jpeg" class="cards-img">
+                    
+                    <p class="cards-info">With Abhijeet, Asha Bhosle, Kavita Krishnamurthy and more</p>
+                </div>               
+                 
+                <div class="card">
+                    <div class="icon-wrapper">
+                        <i class="fa-solid fa-play"></i>
+                    </div>
+                    <img src="/assets/radio3.jpeg" class="cards-img">
+                    
+                    <p class="cards-info">With A.R. Rahman, Sonu Nigam, Vishal-Shekhar and more</p>
+                </div>
+            </div>
+            <br><br><br><br><br><br><br><br><br><br><br><br>
+        </div>
+        
+        <div class="music-player">
+            <div class="album">
+                <img src="/assets/album_picture.jpeg" class="album-img">
+                <div class="album-data">
+                    <p class="album-title"></p>
+                    <p class="album-info"></p>
+                </div>
+                <div class="album-icons">
+                    <img src="/assets/album_icon1.png" class="album-icon1">
+                    <img src="/assets/album_icon2.png" class="album-icon2">
+                </div>
+                
+            </div>
+            <div class="player">
+                <div class="playback-controls">
+                    <button style="appearance: none;border: none;"><img src="/assets/player_icon1.png" class="playback-controls-icon" id="first"></button>
+                    <button style="appearance: none;border: none;" id="previous"><img src="/assets/player_icon2.png" class="playback-controls-icon" id="second"></button>
+                    <button style="appearance: none;border: none;" id="play"><img src="/assets/player_icon3.png" class="playback-controls-icon center" style="opacity: 1; height: 2rem; width: 2rem;" id="third"></button>
+                    <button style="appearance: none;border: none;" id="next"><img src="/assets/player_icon4.png" class="playback-controls-icon" id="fourth"></button>
+                    <button style="appearance: none;border: none;"><img src="/assets/player_icon5.png" class="playback-controls-icon" id="fifth"></button>
+                </div>
+                <div class="playback-bar">
+                    <span id="currenttime">0:00</span>
+                    <input type="range" min="0" max="100" class="timer" id="playbar">
+                    <spa id="duration">0:00</span>
+                </div>
+            </div>
+            <div class="controls">
+                <img src="/assets/controls_icon1.png" class="controls-icon first" style="height: 2.2rem; width: 1.6rem; ">
+                <img src="/assets/controls_icon2.png" class="controls-icon second" style="height: 2.2rem; width: 1.4rem; ">
+                <img src="/assets/controls_icon3.png" class="controls-icon third" style="height: 1.2rem; width: 1.2rem; ">
+                <img src="/assets/controls_icon4.png" class="controls-icon fourth" >
+                <img src="/assets/controls_icon5.png" class="controls-icon volume" id="volume-btn" >
+                <input type="range" min="0" max="100" class="controls-volume volume-slider" id="rangeSlider" style="margin-right: 0.7rem;">
+                <i class="fa-solid fa-up-right-and-down-left-from-center screen "  style="font-size: 0.7rem; margin-right: 1.2rem;"></i>
+            </div>
+        </div>
+    </div>
+<script src="script.js"></script>
+</body>
+</html>
