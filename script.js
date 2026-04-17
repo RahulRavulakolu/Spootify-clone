@@ -6,11 +6,97 @@ let songname = document.querySelector(".album-data").firstElementChild;
 let currenttime = document.querySelector("#currenttime");
 let currduration = document.querySelector("#duration");
 let seekbar = document.querySelector(".timer");
-let songs;
-let currfolder;
+let songs = [];
+let currfolder = "";
+let currentTrackIndex = 0;
 let img = document.querySelector(".album-img");
-console.dir(img)
-//it used to converts the time
+
+const playlistCatalog = {
+    ncs: {
+        info: {
+            heading: "No copyright songs",
+            description: "Songs for you"
+        },
+        songs: [
+            "Bangaru Kalla Buchamo.mp3",
+            "Camila Cabello - Señorita.mp3",
+            "Coolio - Gangsta's Paradise.mp3",
+            "Love Me Like You Do.mp3"
+        ]
+    },
+    cs: {
+        info: {
+            heading: "No copyright songs",
+            description: "Songs for you"
+        },
+        songs: [
+            "Nenu Nuvvantu.mp3",
+            "Oh Priya Priya.mp3",
+            "Rooba Rooba.mp3"
+        ]
+    },
+    Arijit_Singh_Specials: {
+        info: {
+            heading: "Arijit Singh Specials",
+            description: "A curated Arijit Singh playlist"
+        },
+        songs: [
+            "Agar Tum Saath Ho  _ Tamasha _.mp3",
+            "Apna Bana Le - Full Audio _ Bhediya _.mp3",
+            "Bekhayali Full Song _ Kabir Singh _.mp3",
+            "Chahun Main Ya Naa_Aashiqui 2.mp3",
+            "Kesariya - Film Version _ Brahmāstra _.mp3",
+            "Khairiyat - Chhichhore.mp3",
+            "Tujhe Kitna Chahne Lage - Kabir Singh.mp3",
+            "_Tum Hi Ho_ Aashiqui 2.mp3"
+        ]
+    },
+    Pritam: {
+        info: {
+            heading: "Pritam",
+            description: "Popular Pritam tracks"
+        },
+        songs: [
+            "Dunki O Maahi.mp3",
+            "Kesariya.mp3",
+            "MetroIn Dino Zamaana Lage.mp3",
+            "Tera Hone Laga Hoon.mp3",
+            "VE KAMLEYA.mp3",
+            "Yeh Tune Kya Kiya.mp3"
+        ]
+    },
+    SPBalu: {
+        info: {
+            heading: "S.P. Balasubrahmanyam",
+            description: "Classic Telugu hits"
+        },
+        songs: [
+            "Aakanulal.mp3",
+            "Aavesamantha.mp3",
+            "Allantha Doorala.mp3",
+            "Are Emaindhi.mp3",
+            "Emouthundhi.mp3",
+            "Swathi Chinuku.mp3",
+            "Tella Chiraku.mp3",
+            "Theeganai Mallelu.mp3"
+        ]
+    },
+    Sid_sriram: {
+        info: {
+            heading: "Sid Sriram",
+            description: "Melodic favorites"
+        },
+        songs: [
+            "Inkem Inkem Inkem Kaavaale.mp3",
+            "Kumkumala.mp3",
+            "Maate Vinadhuga.mp3",
+            "Samajavaragamana.mp3",
+            "Undiporaadhey.mp3",
+            "Urike Urike.mp3"
+        ]
+    }
+};
+
 function secondsToMinutesSeconds(seconds) {
     if (isNaN(seconds) || seconds < 0) {
         return "00:00";
@@ -25,197 +111,173 @@ function secondsToMinutesSeconds(seconds) {
     return `${formattedMinutes}:${formattedSeconds}`;
 }
 
-async function getsongs(folder){
+async function getsongs(folder) {
     currfolder = folder;
-    let a = await fetch(`http://127.0.0.1:5500/${currfolder}/`);
-    let response = await a.text();
-    let div = document.createElement("div");
-    div.innerHTML = response;
-    
-    let dta = div.getElementsByClassName("icon icon icon-mp3 icon-default"); //songs dic class name is that icon icon-mp3 
-    
-    songs = [];
-    for (let index = 0; index < dta.length; index++) {
-        const element = dta[index];
-        if(element.href.endsWith(".mp3")){
-            songs.push(element.href.split(`/${folder}/`)[1]);
-        }
+    const playlist = playlistCatalog[folder];
+
+    if (!playlist) {
+        songs = [];
+        return songs;
     }
-    //show all the songs in the playlist
-    let songul = document.querySelector(".songslist").getElementsByTagName("ul")[0];
-    songul.innerHTML = ""
+
+    songs = playlist.songs.slice();
+
+    const songul = document.querySelector(".songslist").getElementsByTagName("ul")[0];
+    songul.innerHTML = "";
+
     for (const song of songs) {
-        songul.innerHTML = songul.innerHTML + `<li> 
+        songul.innerHTML += `<li data-song="${song}">
                             <i class="fa-solid fa-music" style="font-size: 1rem;"></i>
                             <div class="songinfo">
-                                <div class="name"> ${song.replaceAll("%20"," ")}</div>
+                                <div class="name">${song.replaceAll("%20", " ")}</div>
                                 <div class="artist">artist</div>
                             </div>
                             <div class="playinfo">
                                 <span>play now</span>
-                                <img src="/assets/player_icon3.png"  style="opacity: 1; height: 1.3rem; width: 1.3rem;">
+                                <img src="assets/player_icon3.png" style="opacity: 1; height: 1.3rem; width: 1.3rem;">
                             </div>
-                            </li>`
-        
-       
+                        </li>`;
     }
-    //gives the array of song names
-    Array.from(document.querySelector(".songslist").getElementsByTagName("li")).forEach(e=>{
-        e.addEventListener("click",()=>{
-            console.log(e.querySelector(".songinfo").firstElementChild.innerHTML);
-            playMusic(e.querySelector(".songinfo").firstElementChild.innerHTML.trim());
-        })
-        
-    })
-    return songs
-};
- 
-//to play the song 
-const playMusic = (track,pause=false)=>{
-    currentsong.src = `/${currfolder}/`+track;
-    if (!pause){
-        currentsong.play()
-        playimg.src = "http://127.0.0.1:5500/assets/Pause-Button.png"
+
+    Array.from(document.querySelector(".songslist").getElementsByTagName("li")).forEach(e => {
+        e.addEventListener("click", () => {
+            playMusic(e.dataset.song);
+        });
+    });
+
+    const playlistTitle = document.querySelector(".album-title");
+    const playlistInfo = document.querySelector(".album-info");
+
+    if (playlistTitle) {
+        playlistTitle.textContent = playlist.info.heading;
     }
-    
-    songname.innerHTML= decodeURI(track);
+
+    if (playlistInfo) {
+        playlistInfo.textContent = playlist.info.description;
+    }
+
+    return songs;
 }
-//to add the albums
-// async function displayAlbums(){
-//     let a = await fetch("http://127.0.0.1:5500/songs/");
-//     let response = await a.text();
-//     let div = document.createElement("div");
-//     div.innerHTML = response;
-//     let anchors = div.getElementsByTagName("a")
-//     let cardcontainer = document.getElementsByClassName("card-container")
-//     Array.from(anchors).forEach(async e=>{
-       
-//         if(e.href.includes("/songs/")){
-//             let folder = e.href.split("/").slice(-1)[0]
-//             //get metadata  from the folder
-//             let a = await fetch(`http://127.0.0.1:5500/songs/${folder}/info.json`);
-//             let response = await a.json();
-//             console.log(cardcontainer)
-//             cardcontainer.innerHTML = cardcontainer.innerHTML + `<div class="card" data-folder="ncs">
-//             <div class="icon-wrapper">
-//                 <i class="fa-solid fa-play"></i>
-//             </div>
-//             <img src="/assets/card8.png" class="cards-img">
-//             <p class="cards-title">${response.title}</p>
-//             <p class="cards-info">${response.description}</p>
-//         </div>`
-//         }
-//     })
-// }
 
-async function main(){
-    //get songs from the server
-    await getsongs("songs/ncs");
-    playMusic(songs[0],true)
+const playMusic = (track, pause = false) => {
+    currentTrackIndex = songs.indexOf(track);
 
-    //adding albums on the page
-    // displayAlbums()
+    if (currentTrackIndex < 0) {
+        currentTrackIndex = 0;
+    }
 
-    // play and pause and next functionality
-    play.addEventListener("click",()=>{
-        if(currentsong.paused){
-            currentsong.play()
-            playimg.src="http://127.0.0.1:5500/assets/Pause-Button.png"
-        }else{
-            currentsong.pause()
-            playimg.src="http://127.0.0.1:5500/assets/player_icon3.png"
+    currentsong.src = `songs/${currfolder}/${encodeURI(track)}`;
+
+    if (!pause) {
+        currentsong.play();
+        playimg.src = "assets/Pause-Button.png";
+    }
+
+    songname.innerHTML = decodeURI(track);
+};
+
+async function main() {
+    await getsongs("ncs");
+
+    if (songs.length > 0) {
+        playMusic(songs[0], true);
+    }
+
+    play.addEventListener("click", () => {
+        if (currentsong.paused) {
+            currentsong.play();
+            playimg.src = "assets/Pause-Button.png";
+        } else {
+            currentsong.pause();
+            playimg.src = "assets/player_icon3.png";
         }
-    })
+    });
 
-    //listen for timeupdate event
-    currentsong.addEventListener("timeupdate",()=>{
-        currenttime.innerHTML = `${secondsToMinutesSeconds(currentsong.currentTime)}` //setting starting time
-        currduration.innerHTML = `${secondsToMinutesSeconds(currentsong.duration)}` //setting end time
-        currentsong.addEventListener("loadedmetadata", () => {
-            seekbar.max = currentsong.duration;
-        });
-          
-        // Update range input as the song plays
-        currentsong.addEventListener("timeupdate", () => {
-            seekbar.value = currentsong.currentTime;
-        });
-          
-        // Allow user to seek manually
-        seekbar.addEventListener("input", () => {
-            currentsong.currentTime = seekbar.value;
-        });
-    
-    })
-    //add an event listner to hamburger
-    document.querySelector("#hamburger").addEventListener("click",()=>{
+    currentsong.addEventListener("loadedmetadata", () => {
+        seekbar.max = currentsong.duration;
+        currduration.innerHTML = `${secondsToMinutesSeconds(currentsong.duration)}`;
+    });
+
+    currentsong.addEventListener("timeupdate", () => {
+        currenttime.innerHTML = `${secondsToMinutesSeconds(currentsong.currentTime)}`;
+        seekbar.value = currentsong.currentTime;
+    });
+
+    seekbar.addEventListener("input", () => {
+        currentsong.currentTime = seekbar.value;
+    });
+
+    currentsong.addEventListener("ended", () => {
+        if (currentTrackIndex + 1 < songs.length) {
+            playMusic(songs[currentTrackIndex + 1]);
+        }
+    });
+
+    document.querySelector("#hamburger").addEventListener("click", () => {
         document.querySelector(".sidebar").style.left = "0";
-    })
-    document.querySelector("#close-btn").addEventListener("click",()=>{
+    });
+
+    document.querySelector("#close-btn").addEventListener("click", () => {
         document.querySelector(".sidebar").style.left = "-120%";
-    })
-
-    //add event listner to previous
-    previous.addEventListener("click",()=>{
-        currentsong.pause();
-        
-        let index = songs.indexOf(currentsong.src.split("/").splice(-1)[0]);
-        if ((index-1) >= 0){
-            playMusic(songs[index-1]);
-            console.log(index-1);
-        }
     });
-    //add event lister to next
-    next.addEventListener("click",()=>{
+
+    previous.addEventListener("click", () => {
         currentsong.pause();
-        let index = songs.indexOf(currentsong.src.split("/").splice(-1)[0]);
-        if ((index+1) < songs.length){
-            playMusic(songs[index+1]);
-            console.log(index+1);
+
+        if ((currentTrackIndex - 1) >= 0) {
+            playMusic(songs[currentTrackIndex - 1]);
         }
     });
 
-    //add event listner to volume
-    document.querySelector(".volume-slider").addEventListener("change",(e)=>{
-        console.log("current volume",e.target.value);
-        currentsong.volume = parseInt(e.target.value)/100;
+    next.addEventListener("click", () => {
+        currentsong.pause();
+
+        if ((currentTrackIndex + 1) < songs.length) {
+            playMusic(songs[currentTrackIndex + 1]);
+        }
     });
 
-    
+    document.querySelector(".volume-slider").addEventListener("input", (e) => {
+        currentsong.volume = parseInt(e.target.value) / 100;
+    });
 
-    //to cahnge the volume region color
     const slider = document.getElementById("rangeSlider");
     slider.addEventListener("input", function () {
-    const value = (this.value - this.min) / (this.max - this.min) * 100;
-    
-    this.style.background = `linear-gradient(to right, #1bd760 ${value}%, #ffffff ${value}%)`;
+        const value = (this.value - this.min) / (this.max - this.min) * 100;
+        this.style.background = `linear-gradient(to right, #1bd760 ${value}%, #ffffff ${value}%)`;
     });
 
-    //load playlist when card is clicked
-    Array.from(document.getElementsByClassName("card")).forEach(e=>{
-        e.addEventListener("click",async item=>{
-            console.log(item.currentTarget.dataset.folder)
-            songs = await getsongs(`songs/${item.currentTarget.dataset.folder}`);
-            console.dir(songs)
-            playMusic(songs[0])
-        })
-    })
-    //adding event listner to change volume btn to mute
-    document.getElementById("volume-btn").addEventListener("click",e=>{
-        if(e.target.src.includes("icon5.png")){
-            e.target.src = e.target.src.replace("controls_icon5","mute")
-            e.target.classList.add("volume-btn")
-            currentsong.volume = 0
-            document.querySelector(".volume-slider").value = "0"
-            document.querySelector("#rangeSlider").style.background = "linear-gradient(to right, #1bd760 0%, #ffffff 0%)";
+    Array.from(document.getElementsByClassName("card")).forEach(card => {
+        const folder = card.dataset.folder;
+
+        if (!folder) {
+            return;
         }
-        else{
-            e.target.src = e.target.src.replace("mute","controls_icon5")
-            e.target.classList.remove("volume-btn")
-            currentsong.volume = 0.10
-            document.querySelector("#rangeSlider").value = "10"
+
+        card.addEventListener("click", async item => {
+            songs = await getsongs(item.currentTarget.dataset.folder);
+
+            if (songs.length > 0) {
+                playMusic(songs[0]);
+            }
+        });
+    });
+
+    document.getElementById("volume-btn").addEventListener("click", e => {
+        if (e.target.src.includes("controls_icon5.png")) {
+            e.target.src = e.target.src.replace("controls_icon5.png", "mute.png");
+            e.target.classList.add("volume-btn");
+            currentsong.volume = 0;
+            document.querySelector(".volume-slider").value = "0";
+            document.querySelector("#rangeSlider").style.background = "linear-gradient(to right, #1bd760 0%, #ffffff 0%)";
+        } else {
+            e.target.src = e.target.src.replace("mute.png", "controls_icon5.png");
+            e.target.classList.remove("volume-btn");
+            currentsong.volume = 0.10;
+            document.querySelector(".volume-slider").value = "10";
             document.querySelector("#rangeSlider").style.background = "linear-gradient(to right, #1bd760 10%, #ffffff 10%)";
         }
-    })
+    });
+}
 
-};
 main();
