@@ -76,18 +76,19 @@ Spotify-Clone/
    ```
    /songs/ncs/track1.mp3
    /songs/cs/track2.mp3
+   ```
 
 
 🚀 Deploying on Render
 
-1. Create a new **Static Site** on Render.
-2. Connect this repository.
-3. Set the **Publish Directory** to the repository root.
-4. Leave the **Build Command** empty.
-5. Deploy the site.
+This repository includes a [`render.yaml`](render.yaml) blueprint for a static site deployment.
 
-This project is now configured to work without a local development server. The playlist data is loaded from a static manifest, so the app works after deployment on Render.
-   ```
+1. Create a new **Blueprint** or **Static Site** on Render.
+2. Connect this repository.
+3. Use the repository root as the publish path.
+4. Deploy the site.
+
+This project is configured to work without a local development server. The playlist data is loaded from a static manifest, so the app works after deployment on Render.
 
 
 
